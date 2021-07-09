@@ -18,6 +18,10 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerview;
     ArrayList<String> people_names = new ArrayList<>();
+    ArrayList<String> people_firstnames = new ArrayList<>();
+    ArrayList<String> people_lastnames = new ArrayList<>();
+    ArrayList<String> people_emails = new ArrayList<>();
+    ArrayList<String> people_phones = new ArrayList<>();
 
 
     @Override
@@ -35,13 +39,18 @@ public class MainActivity extends AppCompatActivity {
 
             JSONArray userArray = obj.getJSONArray("user");
 
-            for (int i=1; i < userArray.length(); i++){
+            for (int i=0; i < userArray.length(); i++){
 
-                JSONObject peopleName = userArray.getJSONObject(i);
+                JSONObject peopleDetail = userArray.getJSONObject(i);
 
-                people_names.add(peopleName.getString("firstName")+ " " +peopleName.getString("lastName") );
+                people_names.add(peopleDetail.getString("firstName")+ " " +peopleDetail.getString("lastName") );
+                people_firstnames.add(peopleDetail.getString("firstName"));
+                people_lastnames.add(peopleDetail.getString("lastName"));
+               // people_emails.add(peopleDetail.getString("email"));
+               // people_phones.add(peopleDetail.getString("phone"));
 
             }
+
 
         }catch (JSONException e)
         {
@@ -49,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        CustomAdapter customAdapter = new CustomAdapter(people_names,MainActivity.this);
+        CustomAdapter customAdapter = new CustomAdapter(people_names,people_firstnames,people_lastnames,MainActivity.this);
         recyclerview.setAdapter(customAdapter);
 
 
